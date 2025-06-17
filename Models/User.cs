@@ -7,6 +7,6 @@ namespace Todo.Models
 {
     public class User
     {
-        
+
     }
 }

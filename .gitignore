@@ -1,0 +1,75 @@
+.env
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.sln.docstates
+*.vspscc
+*.vssscc
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+[Bb]in/
+[Oo]bj/
+
+# Packages
+*.nupkg
+*.snk
+Packages/
+packages/
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Entity Framework Core
+# SQLite database files
+*.db
+*.sqlite
+*.sqlite3
+
+# DotEnv
+.env
+.env.*
+
+# Visual Studio Code
+.vscode/
+
+# Rider
+.idea/
+
+# Resharper
+_ReSharper*/
+*.resharper
+*.dotsettings.user
+
+# Mac
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Source Control
+*.orig
+*.bak
+*.scc
+
+# Log Files
+*.log
+
+# Test Results
+TestResults/
+*.trx
+
+# User-specific files
+*.tlog
+*.lastbuildstate
+
+# Front-end build artifacts (if applicable)
+wwwroot/dist/
+wwwroot/lib/
+wwwroot/css/*.min.css
+wwwroot/js/*.min.js
