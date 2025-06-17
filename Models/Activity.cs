@@ -15,13 +15,15 @@ namespace Todo.Models
 
         [Required]
         [MaxLength(500)]
-        public string Name { get; set; }
+        public required string Name { get; set; }
 
         [MaxLength(500)]
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
-        public Status Status { get; set; }
+        public required Status Status { get; set; }
 
-        // public int UserId { get; set; }
+        public required string UserId { get; set; }
+
+        public User User { get; set; } = null!;
     }
 }

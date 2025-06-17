@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic;
 using Todo.Data;
@@ -17,17 +18,20 @@ namespace Todo.Repositories
             _context = context;
         }
 
-        public async Task<Activity> CreateAsync(CreateActivityDto createActivityDto)
+        public async Task<Activity> CreateAsync(string userId, CreateActivityDto createActivityDto)
         {
             var activity = createActivityDto.ToActivityFromCreateActivityDto();
+            activity.UserId = userId;
+
             await _context.Activity.AddAsync(activity);
             await _context.SaveChangesAsync();
             return activity;
         }
 
-        public async Task<Activity?> DeleteAsync(int id)
+        public async Task<Activity?> DeleteAsync(string userId, int id)
         {
-            var activity = await _context.Activity.FindAsync(id);
+            var activity = await _context.Activity
+            .FirstOrDefaultAsync(activity => activity.ID == id && activity.UserId == userId);
             if (activity is null)
             {
                 return null;
@@ -38,14 +42,19 @@ namespace Todo.Repositories
             return activity;
         }
 
-        public async Task<List<Activity>> GetAllAsync()
+        public async Task<List<Activity>> GetAllAsync(string userId)
         {
-            return await _context.Activity.OrderBy(activity => activity.ID).ToListAsync();
+            return await _context.Activity
+            .Where(activity => activity.UserId == userId)
+            .OrderBy(activity => activity.ID)
+            .ToListAsync();
         }
 
-        public async Task<Activity?> GetByIdAsync(int id)
+        public async Task<Activity?> GetByIdAsync(string userId, int id)
         {
-            var activity = await _context.Activity.FindAsync(id);
+            var activity = await _context.Activity
+            .FirstOrDefaultAsync(activity => activity.ID == id && activity.UserId == userId);
+
             if (activity is null)
             {
                 return null;
@@ -54,19 +63,23 @@ namespace Todo.Repositories
             return activity;
         }
 
-        public async Task<Activity?> UpdateAsync(int id, UpdateActivityDto updateActivityDto)
+        public async Task<Activity?> UpdateAsync(int id, string userId, UpdateActivityDto updateActivityDto)
         {
-            var activity = await _context.Activity.FindAsync(id);
+            var activity = await _context.Activity.FirstOrDefaultAsync(activity => activity.ID == id && activity.UserId == userId);
             if (activity is null)
             {
                 return null;
             }
 
             var activityDtoToActivity = updateActivityDto.ToActivityFromUpdateActivityDto();
+            activityDtoToActivity.UserId = userId;
 
             activity.Name = activityDtoToActivity.Name;
             activity.Description = activityDtoToActivity.Description;
             activity.Status = activityDtoToActivity.Status;
+            activity.UserId = activityDtoToActivity.UserId;
+
+            await _context.SaveChangesAsync();
 
             return activity;
         }

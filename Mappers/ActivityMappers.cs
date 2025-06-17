@@ -5,7 +5,7 @@ namespace Todo.Mappers
 {
     public static class ActivityMappers
     {
-        public static CreateActivityDto ToActivityDto(this Activity activity)
+        public static ActivityDto ToActivityDto(this Activity activity)
         {
             string status = activity.Status switch
             {
@@ -15,11 +15,13 @@ namespace Todo.Mappers
                 _ => throw new Exception("Status not valid."),
             };
 
-            return new CreateActivityDto
+            return new ActivityDto
             {
+                ID = activity.ID,
                 Name = activity.Name,
                 Description = activity.Description,
                 Status = status,
+                UserId = activity.UserId,
             };
         }
 
@@ -38,6 +40,7 @@ namespace Todo.Mappers
                 Name = createActivityDto.Name,
                 Description = createActivityDto.Description,
                 Status = status,
+                UserId = "",
             };
         }
 
@@ -56,7 +59,7 @@ namespace Todo.Mappers
                 Name = updateActivityDto.Name,
                 Description = updateActivityDto.Description,
                 Status = status,
-
+                UserId = "",
             };
         }
     }

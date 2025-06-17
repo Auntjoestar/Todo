@@ -1,12 +1,24 @@
 using dotenv.net;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Todo.Data;
+using Todo.Interfaces;
+using Todo.Models;
+using Todo.Repositories;
 
 DotEnv.Load();
 
 var envVars = DotEnv.Read();
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddAuthorization();
+builder.Services.AddIdentityApiEndpoints<User>()
+                .AddEntityFrameworkStores<ApplicationDBContext>();
+
+builder.Services.AddScoped<IActivityRepository, ActivityRepository>();
+builder.Services.AddControllers();
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -31,5 +43,22 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.MapControllers().RequireAuthorization();
+
+// Auth endpoints
+app.MapIdentityApi<User>();
+app.MapPost("/logout", async (SignInManager<User> signInManager,
+    [FromBody] object empty) =>
+{
+    if (empty != null)
+    {
+        await signInManager.SignOutAsync();
+        return Results.Ok();
+    }
+    return Results.Unauthorized();
+})
+.WithOpenApi()
+.RequireAuthorization();
 
 app.Run();

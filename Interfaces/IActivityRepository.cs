@@ -5,10 +5,10 @@ namespace Todo.Interfaces
 {
     public interface IActivityRepository
     {
-        Task<List<Activity>> GetAllAsync();
-        Task<Activity?> GetByIdAsync(int id);
-        Task<Activity> CreateAsync(CreateActivityDto createActivityDto);
-        Task<Activity?> UpdateAsync(int id, UpdateActivityDto updateActivityDto);
-        Task<Activity?> DeleteAsync(int id);
+        Task<List<Activity>> GetAllAsync(string userId);
+        Task<Activity?> GetByIdAsync(string userId, int id);
+        Task<Activity> CreateAsync(string userId, CreateActivityDto createActivityDto);
+        Task<Activity?> UpdateAsync(int id, string userId, UpdateActivityDto updateActivityDto);
+        Task<Activity?> DeleteAsync(string userId, int id);
     }
 }
