@@ -70,18 +70,5 @@ app.MapControllers();
 // Auth endpoints
 app.MapIdentityApi<User>();
 
-app.MapPost("/logout", async (SignInManager<User> signInManager,
-    [FromBody] object empty) =>
-{
-    if (empty != null)
-    {
-        await signInManager.SignOutAsync();
-        return Results.Ok();
-    }
-    return Results.Unauthorized();
-})
-.WithOpenApi()
-.RequireAuthorization();
-
-
 app.Run();
+

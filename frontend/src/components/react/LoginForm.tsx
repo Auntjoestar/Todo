@@ -8,8 +8,7 @@ import React, {
 	type HtmlHTMLAttributes,
 	type SyntheticEvent,
 } from 'react'
-
-import { loginQuery } from '../lib/asp'
+import { loginQuery } from '../../lib/asp/auth'
 
 export const LoginForm: FC = () => {
 	const [email, setEmail] = useState('')
@@ -25,9 +24,9 @@ export const LoginForm: FC = () => {
 
 	const handleOnSubmit = (e: FormEvent) => {
 		e.preventDefault()
-		console.log(email)
-		console.log(password)
 		loginQuery(email, password).then((result) => console.log(result))
+		setEmail('')
+		setPassword('')
 	}
 
 	return (
@@ -38,9 +37,10 @@ export const LoginForm: FC = () => {
 					<input
 						type="email"
 						className="input"
-						placeholder="Type here"
+						placeholder="example@example.com"
 						value={email}
 						onChange={handleEmailChange}
+						required
 					/>
 				</fieldset>
 				<fieldset className="fieldset">
@@ -48,9 +48,10 @@ export const LoginForm: FC = () => {
 					<input
 						type="password"
 						className="input"
-						placeholder="Type here"
+						placeholder="password"
 						value={password}
 						onChange={handlePasswordChange}
+						required
 					/>
 				</fieldset>
 			</form>
