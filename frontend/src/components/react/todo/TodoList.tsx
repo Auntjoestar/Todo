@@ -1,7 +1,7 @@
 import { StrictMode, useEffect, useState, type ChangeEvent, type FC, type FormEvent } from 'react'
 import { TodoForm } from './TodoForm'
 import { TaskList } from './TaskList'
-import { getActivitiesQuery } from '../../../lib/asp/asp'
+import { getActivitiesQuery } from '../../../lib/asp/activities'
 
 interface Task {
 	id: number

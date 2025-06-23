@@ -28,8 +28,12 @@ export const loginQuery = async (
 export const logoutQuery = async (): Promise<{ success: boolean; message?: string }> => {
 	const url = `${apiUrl}/logout`
 	const response = await fetch(url, {
-		method: 'GET',
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
 		credentials: 'include',
+		body: JSON.stringify({}),
 	})
 
 	if (response.status == 401) {
@@ -59,16 +63,16 @@ export const isUserAuthQuery = async (): Promise<userIdentity> => {
 		credentials: 'include',
 	})
 
-	const userIdentity: userIdentity = await response.json()
-
 	if (response.status == 401) {
-		return userIdentity
+		return { isAuthenticated: false, userName: null }
 	}
 
 	if (response.status != 200) {
 		const errorText = await response.text()
 		throw new Error(`Request failed with status: ${response.status} - ${errorText}`)
 	}
+
+	const userIdentity: userIdentity = await response.json()
 
 	return userIdentity
 }

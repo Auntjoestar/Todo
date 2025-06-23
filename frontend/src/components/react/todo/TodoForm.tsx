@@ -1,5 +1,5 @@
 import { StrictMode, useState, type ChangeEvent, type FC, type FormEvent } from 'react'
-import { postActivitiesQuery } from '../../../lib/asp/asp'
+import { postActivitiesQuery } from '../../../lib/asp/activities'
 
 interface TodoFormProps {
 	onAddTask: (newTask: { name: string; description: string | null; status: string }) => number

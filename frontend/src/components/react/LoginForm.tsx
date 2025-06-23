@@ -24,7 +24,11 @@ export const LoginForm: FC = () => {
 
 	const handleOnSubmit = (e: FormEvent) => {
 		e.preventDefault()
-		loginQuery(email, password).then((result) => console.log(result))
+		loginQuery(email, password).then((result) => {
+			if (result.success) {
+				window.location.href = '/'
+			}
+		})
 		setEmail('')
 		setPassword('')
 	}

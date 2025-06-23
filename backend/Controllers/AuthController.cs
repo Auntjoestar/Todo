@@ -10,7 +10,6 @@ using Todo.Models;
 namespace backend.Controllers
 {
     [ApiController]
-    [Route("api/")]
     public class Auth : ControllerBase
     {
         [HttpGet("me")]
@@ -31,7 +30,7 @@ namespace backend.Controllers
             });
         }
 
-        [HttpGet("logout")]
+        [HttpPost("logout")]
         [Authorize]
         public async Task<IActionResult> Logout(SignInManager<User> signInManager, [FromBody] object empty)
         {

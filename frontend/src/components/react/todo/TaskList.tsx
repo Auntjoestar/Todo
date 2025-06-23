@@ -22,6 +22,7 @@ export const TaskList: FC<TaskListProps> = ({ tasks }) => {
 					<li className="p-4 pb-2 text-xs tracking-wide opacity-60">Tasks</li>
 					{tasks.map((task) => (
 						<Task
+							key={task.id}
 							id={task.id}
 							name={task.name}
 							description={task.description}

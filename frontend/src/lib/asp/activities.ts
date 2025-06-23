@@ -1,11 +1,15 @@
 import { apiUrl } from './asp'
 
-export const getActivitiesQuery = async (): Promise<{
-	id: string
-	name: string
-	description: string | null
-	status: string
-}> => {
+export const getActivitiesQuery = async (): Promise<
+	[
+		{
+			id: string
+			name: string
+			description: string | null
+			status: string
+		},
+	]
+> => {
 	const url = `${apiUrl}/api/activity`
 	const response = await fetch(url, {
 		method: 'GET',
